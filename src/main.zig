@@ -1,7 +1,7 @@
-const rgui = @import("raygui");
 const rl = @import("raylib");
 
 const scale = 1.0;
+const base_size = 16.0;
 
 pub fn main() anyerror!void {
     const screenWidth = 450;
@@ -11,14 +11,16 @@ pub fn main() anyerror!void {
     defer rl.closeWindow();
 
     rl.setTargetFPS(60);
-    rgui.setStyle(rgui.Control.default, rgui.ControlOrDefaultProperty{ .default = .text_size }, 28);
 
     while (!rl.windowShouldClose()) {
         rl.beginDrawing();
         defer rl.endDrawing();
 
-        rl.clearBackground(.white);
+        rl.clearBackground(rl.Color.light_gray);
 
-        _ = rgui.label(.{ .height = 120.0, .width = 150.0, .x = 60.0, .y = 100.0 }, "Your Goals");
+        rl.drawText("hello world", base_size, base_size, base_size * 2.0, .gray);
+
+        rl.drawRectangle(base_size, base_size * 4, screenWidth - base_size * 2, base_size * 5.0, .gray);
+        rl.drawText("New text here", base_size * 2, base_size * 5, base_size, .dark_gray);
     }
 }
