@@ -44,15 +44,15 @@ pub fn Note() type {
 pub fn Category() type {
     return struct {
         const Self = @This();
-        notes: []Note(),
+        notes: std.ArrayListUnmanaged(Note()),
         title: Font,
         allocator: std.mem.Allocator,
         position: Position,
 
-        pub fn render(self: Self) void {
+        pub fn render(self: *Self) void {
             const title_size: f32 = @floatFromInt(self.title.size);
             rl.drawText(self.title.value, @intFromFloat(self.position.x), @intFromFloat(self.position.y), base_size * 2, .dark_gray);
-            for (self.notes, 0..) |*note, index| {
+            for (self.notes.items, 0..) |*note, index| {
                 const i: f32 = @floatFromInt(index);
                 note.size = .{ .h = base_size * 5.0, .w = base_size * 20 };
                 note.position = .{ .x = self.position.x, .y = self.position.y + title_size + (i * (@as(f32, @floatFromInt(note.size.h)) + base_size)) + base_size * 1.5 };
@@ -82,7 +82,7 @@ pub fn Category() type {
             }
             return Self{
                 .title = title,
-                .notes = notes.items,
+                .notes = notes,
                 .allocator = allocator,
                 .position = position,
             };
