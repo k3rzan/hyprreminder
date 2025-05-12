@@ -24,6 +24,7 @@ pub fn main() anyerror!void {
         "this is another test",
     };
     var category = try ui.Category().init(notes[0..], text, .{ .x = ui.base_size, .y = ui.base_size * 5 });
+    defer category.deinit();
 
     while (!rl.windowShouldClose()) {
         rl.beginDrawing();

@@ -60,8 +60,8 @@ pub fn Category() type {
             }
         }
 
-        pub fn deinit(_: Self) void {
-            std.debug.print("deinited\n", .{});
+        pub fn deinit(self: *Self) void {
+            self.notes.deinit(self.allocator);
         }
 
         pub fn init(note_values: [][:0]const u8, title: Font, position: Position) !Self {
